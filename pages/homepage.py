@@ -2,13 +2,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from sites.walmart import Walmart
 from sites.bestbuy import BestBuy
 from pages.createdialog import CreateDialog
-from utils import get_profile, get_proxy, BirdLogger, return_data, write_data, open_browser
+from utils import get_profile, get_proxy, TaskLogger, return_data, write_data, open_browser
 import urllib.request,sys,platform
 import settings
 def no_abort(a, b, c):
     sys.__excepthook__(a, b, c)
 sys.excepthook = no_abort
-logger = BirdLogger()
+logger = TaskLogger()
 class HomePage(QtWidgets.QWidget):
     def __init__(self,parent=None):
         super(HomePage, self).__init__(parent)

@@ -1,3 +1,9 @@
+"""
+SwiftCart - Global Application Settings
+
+Defines default configuration values for webhook notifications and browser behavior.
+"""
+
 global webhook
 webhook = ""
 global webhook_on_browser
