@@ -1,8 +1,18 @@
-import requests, time, datetime, json
+"""
+SwiftCart - Discord Webhook Integration
 
-#modified from https://github.com/lovvskillz/python-discord-webhook 
+Provides Discord webhook functionality for notifications.
+Modified from: https://github.com/lovvskillz/python-discord-webhook
+"""
+
+import requests
+import time
+import datetime
+import json
+
 
 class DiscordWebhook:
+    """Discord webhook client for sending notifications."""
     def __init__(self, url, **kwargs):
         self.url = url
         self.content = kwargs.get("content")
@@ -50,6 +60,7 @@ class DiscordWebhook:
 
 
 class DiscordEmbed:
+    """Discord embed builder for rich message formatting."""
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         self.description = kwargs.get("description")

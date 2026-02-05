@@ -1,22 +1,38 @@
+"""
+SwiftCart - Main Application Entry Point
+
+Modern auto-checkout solution with PyQt5 desktop interface.
+"""
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pages.homepage import HomePage,TaskTab
+from pages.homepage import HomePage, TaskTab
 from pages.createdialog import CreateDialog
 from pages.profilespage import ProfilesPage
 from pages.proxiespage import ProxiesPage
 from pages.settingspage import SettingsPage
-import images.images, sys, os
+import images.images
+import sys
+import os
+
+
 def no_abort(a, b, c):
+    """Prevent application abort on exceptions."""
     sys.__excepthook__(a, b, c)
+
+
 sys.excepthook = no_abort
 class MainWindow(QtWidgets.QMainWindow):
+    """Main application window for SwiftCart."""
+    
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent=parent)
         self.setupUi(self)
         self.show()
+    
     def setupUi(self, MainWindow):
         MainWindow.setFixedSize(1109, 600)
         MainWindow.setStyleSheet("background-color: #1E1E1E;")
-        MainWindow.setWindowTitle("Bird Bot")
+        MainWindow.setWindowTitle("SwiftCart")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("QMessageBox QLabel { color: #FFFFFF; }QMessageBox QPushButton { background-color: #5D43FB;color: #FFFFFF;}")
         self.sidebar = QtWidgets.QWidget(self.centralwidget)
@@ -96,7 +112,9 @@ class MainWindow(QtWidgets.QMainWindow):
         MainWindow.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.set_functions()
+    
     def set_functions(self):
+        """Initialize event handlers and page navigation."""
         self.current_page = "home"
         self.home_tab.mousePressEvent = lambda event: self.change_page(event,"home")
         self.profiles_tab.mousePressEvent = lambda event: self.change_page(event,"profiles")
@@ -104,7 +122,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_tab.mousePressEvent = lambda event: self.change_page(event,"settings")
         self.homepage.newtask_btn.clicked.connect(self.createdialog.show)
     
-    def change_page(self,event,current_page):
+    def change_page(self, event, current_page):
+        """Handle navigation between application pages."""
         eval('self.{}_active_tab.setStyleSheet("background-color: transparent;border: none;")'.format(self.current_page))
         eval('self.{}_icon.setPixmap(QtGui.QPixmap(":/images/{}.png"))'.format(self.current_page,self.current_page))
         eval('self.{}_tab.setStyleSheet("background-color: transparent;border: none;")'.format(self.current_page))
@@ -137,11 +156,16 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.homepage.stop_all_tasks,
                     self.homepage.scrollAreaWidgetContents)
                 self.homepage.verticalLayout.addWidget(tab)
-                spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-                self.homepage.verticalLayout.addItem(spacerItem) 
-        
-#(.*)
+                spacerItem = QtWidgets.QSpacerItem(
+                    20, 40, 
+                    QtWidgets.QSizePolicy.Minimum, 
+                    QtWidgets.QSizePolicy.Expanding
+                )
+                self.homepage.verticalLayout.addItem(spacerItem)
+
+
 if __name__ == "__main__":
+    """Application entry point."""
     ui_app = QtWidgets.QApplication(sys.argv)
     ui = MainWindow()
     ui.setWindowIcon(QtGui.QIcon("images/birdbot.png"))
